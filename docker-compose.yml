@@ -1,0 +1,34 @@
+version: '3.7'
+services:
+  httpd:
+    image: localhost:5000/httpd1
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./www:/var/www/html
+    cpus: 0.5
+    mem_limit: 512m
+    mem_reservation: 128M
+    networks:
+      - httpd_net
+
+  nginx:
+    image: localhost:5000/nginx1
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./www:/var/www/html
+    cpus: 0.5
+    mem_limit: 512m
+    mem_reservation: 128M
+    networks:
+      - nginx_net
+
+networks:
+  httpd_net:
+    driver: bridge
+    name: httpd-network
+  nginx_net:
+    driver: bridge
+    name: nginx-network
+      
