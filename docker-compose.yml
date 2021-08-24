@@ -31,4 +31,3 @@ networks:
   nginx_net:
     driver: bridge
     name: nginx-network
-      

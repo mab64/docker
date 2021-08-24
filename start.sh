@@ -1,21 +1,29 @@
-# Start local registry
+#!/bin/bash
+
+echo 'Run local registry...'
 docker run -dit -p 5000:5000 -v registry:/var/lib/registry --name registry registry
 
-# Build images
-docker build -t localhost:5000/nginx1:0.1 -t localhost:5000/nginx1:latest -f Dockerfile.nginx .
-docker build -t localhost:5000/httpd1:0.1 -t localhost:5000/httpd1:latest -f Dockerfile.httpd .
+echo
+echo 'Build images...'
+docker build -t localhost:5000/nginx1:0.1 -t localhost:5000/nginx1:latest \
+             -f Dockerfile.nginx .
+docker build -t localhost:5000/httpd1:0.1 -t localhost:5000/httpd1:latest \
+             -f Dockerfile.httpd .
 
-# Push images to local registry
+echo
+echo 'Push images to registry...'
 docker push -a localhost:5000/httpd1
 docker push -a localhost:5000/nginx1
 
-# Remove images
-docker rmi localhost:5000/httpd1:0.1
-docker rmi localhost:5000/httpd1:latest
-docker rmi localhost:5000/nginx1:0.1
-docker rmi localhost:5000/nginx1:latest
 
-# Run containers
+# To check local registry is working
+echo
+echo 'Remove local images...'
+docker rmi -f localhost:5000/httpd1:0.1 localhost:5000/httpd1:latest \
+              localhost:5000/nginx1:0.1 localhost:5000/nginx1:latest
+
+echo
+echo 'Run containers...'
 docker-compose up -d
 
 

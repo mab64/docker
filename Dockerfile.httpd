@@ -1,8 +1,8 @@
 FROM httpd:alpine
 
-WORKDIR /var/www/html
-
 COPY conf/httpd.conf /usr/local/apache2/conf/httpd.conf
+
+WORKDIR /var/www/html
 
 EXPOSE 8080
 
